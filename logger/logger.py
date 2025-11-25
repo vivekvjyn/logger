@@ -1,49 +1,49 @@
+import datetime
 import os
 
 class Logger:
-    def __init__(self, run_id, width=100):
-        self.log_dir = "logs"
-        self.name = run_id
+    def __init__(self, width=100):
         self.width = width
-        self.bar_active = False
-        os.makedirs(self.log_dir, exist_ok=True)
-        if os.path.exists(os.path.join(self.log_dir, self.name + ".txt")):
-            os.remove(os.path.join(self.log_dir, self.name + ".txt"))
+        self.pbar_active = False
 
-    def _remove_line(self):
-        with open(os.path.join(self.log_dir, self.name + ".txt"), 'rb+') as logfile:
-            logfile.seek(0, 2)
-            end = logfile.tell()
-            pos = end - 1
-            while pos > 0:
-                logfile.seek(pos)
-                if logfile.read(1) == b'\n':
-                    break
-                pos -= 1
-            logfile.truncate(pos+1 if pos > 0 else 0)
+        self.dir = os.path.join("runs", f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}")
+        os.makedirs(self.dir, exist_ok=True)
 
-    def message(self, message):
-        self.bar_active = False
-        with open(os.path.join(self.log_dir, self.name + ".txt"), "a") as logfile:
-            logfile.write(message + "\n")
+        if os.path.exists(os.path.join(self.dir, "log.txt")):
+            os.remove(os.path.join(self.dir, "log.txt"))
+
+    def __call__(self, message):
+        self.pbar_active = False
+
+        with open(os.path.join(self.dir, "log.txt"), "a") as f:
+            f.write(message + "\n")
             print(message)
 
-    def progress_bar(self, progress, total):
-        with open(os.path.join(self.log_dir, self.name + ".txt"), "a") as logfile:
-            if not self.bar_active:
-                self.bar_active = True
+    def pbar(self, progress, total):
+        with open(os.path.join(self.dir, "log.txt"), "a") as f:
+            if not self.pbar_active:
+                self.pbar_active = True
             else:
-                self._remove_line()
+                self._carriage_return()
                 print("\r", end="")
-            logfile.write(f"|{'=' * int(self.width * progress / total)}{' ' * (self.width - int(self.width * progress / total))}|")
+
+            f.write(f"|{'=' * int(self.width * progress / total)}{' ' * (self.width - int(self.width * progress / total))}|")
             print(f"|{'=' * int(self.width * progress / total)}{' ' * (self.width - int(self.width * progress / total))}|", end="")
+
             if progress == total:
-                self.bar_active = False
-                logfile.write("\n")
+                self.pbar_active = False
+                f.write("\n")
                 print("\n", end="")
 
-    def heading(self, heading):
-        with open(os.path.join(self.log_dir, self.name + ".txt"), "a") as logfile:
-            spaces = (self.width - len(heading)) // 2 * " "
-            logfile.write(f'\n{spaces}{heading}\n\n')
-            print(f'\n{spaces}{heading}\n')
+    def _carriage_return(self):
+        with open(os.path.join(self.dir, "log.txt"), "rb+") as f:
+            f.seek(0, 2)
+            pos = f.tell() - 1
+
+            while pos > 0:
+                f.seek(pos)
+                if f.read(1) == b"\n":
+                    break
+                pos -= 1
+
+            f.truncate(pos + 1 if pos > 0 else 0)
