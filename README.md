@@ -25,7 +25,7 @@ Logger(log_dir: str, width: int = 100)
 __call__(message: str) -> None:
 ```
 
-Logs a message to the log file.
+Logs a message to both the console and a log file.
 
 **Arguments**
 
@@ -44,12 +44,12 @@ logger("This is a log message.")
 pbar(progress: int, total: int) -> None:
 ```
 
-Displays a progress bar in the log file.
+Displays or updates a progress bar in both the console and a log file.
 
 **Arguments**
 
-- `progress` (*int*): Current progress value.
-- `total` (*int*): Total value for completion.
+- `progress` (*int*): The current progress.
+- `total` (*int*): The total value for completion.
 
 **Example**
 
