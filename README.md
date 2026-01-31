@@ -21,9 +21,9 @@ Logger(log_dir: str, width: int = 100)
 
 ### Methods
 
-'''python
+```python
 __call__(message: str) -> None:
-'''
+```
 
 Logs a message to the log file.
 
@@ -40,9 +40,9 @@ logger = Logger(log_dir='logs', width=80)
 logger("This is a log message.")
 ```
 
-'''python
+```python
 pbar(progress: int, total: int) -> None:
-'''
+```
 
 Displays a progress bar in the log file.
 
