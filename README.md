@@ -16,8 +16,8 @@ Logger(log_dir: str, width: int = 100)
 
 **Arguments**
 
-- log_dir (*str*): Directory to save log files.
-- width (*int*): Width of the log display (default is 100).
+- `log_dir` (*str*): Directory to save log files.
+- `width` (*int*): Width of the log display (default is 100).
 
 ### Methods
 
@@ -29,7 +29,7 @@ Logs a message to the log file.
 
 **Arguments**
 
-- message (*str*): The message to log.
+- `message` (*str*): The message to log.
 
 **Example**
 
@@ -48,8 +48,8 @@ Displays a progress bar in the log file.
 
 **Arguments**
 
-- progress (*int*): Current progress value.
-- total (*int*): Total value for completion.
+- `progress` (*int*): Current progress value.
+- `total` (*int*): Total value for completion.
 
 **Example**
 
