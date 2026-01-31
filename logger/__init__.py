@@ -1,18 +1,27 @@
-import datetime
 import os
 
 class Logger:
-    def __init__(self, width=100):
+    def __init__(self, log_dir, width=100):
+        """
+        Initializes the Logger instance.
+        Args:
+            log_dir (str): The directory where the log file will be stored.
+            width (int): The width of the progress bar.
+        """
         self.width = width
         self.pbar_active = False
-
-        self.dir = os.path.join("runs", f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}")
+        self.dir = log_dir
         os.makedirs(self.dir, exist_ok=True)
-
         if os.path.exists(os.path.join(self.dir, "log.txt")):
             os.remove(os.path.join(self.dir, "log.txt"))
 
     def __call__(self, message):
+        """
+        Logs a message to both the console and a log file.
+
+        Args:
+            message (str): The message to log.
+        """
         self.pbar_active = False
 
         with open(os.path.join(self.dir, "log.txt"), "a") as f:
@@ -20,6 +29,13 @@ class Logger:
             print(message)
 
     def pbar(self, progress, total):
+        """
+        Displays or updates a progress bar in both the console and a log file.
+
+        Args:
+            progress (int): The current progress.
+            total (int): The total value for completion.
+        """
         with open(os.path.join(self.dir, "log.txt"), "a") as f:
             if not self.pbar_active:
                 self.pbar_active = True
@@ -36,6 +52,9 @@ class Logger:
                 print("\n", end="")
 
     def _carriage_return(self):
+        """
+        Moves the file pointer to the beginning of the last line in the log file.
+        """
         with open(os.path.join(self.dir, "log.txt"), "rb+") as f:
             f.seek(0, 2)
             pos = f.tell() - 1
