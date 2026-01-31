@@ -2,11 +2,11 @@
 
 ## Setup
 
-'''bash
+```bash
 git clone https://github.com/vivekvjyn/logger
 cd logger
 pip install -e .
-'''
+```
 
 ## Usage
 
