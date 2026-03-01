@@ -2,4 +2,4 @@
 *.egg-info/
 
 # docs
-docs/_build/
+docs/build/
