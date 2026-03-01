@@ -9,7 +9,8 @@ Margerethe documentation
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :glob:
 
-   introduction
+   overview
    margrethe
-   examples
+   tutorial

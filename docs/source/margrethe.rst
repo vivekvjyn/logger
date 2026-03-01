@@ -3,10 +3,7 @@ Margrethe
 
 .. automodule:: margrethe.margrethe
     :show-inheritance:
-
-
-Methods
--------
+    :members:
 
 .. automethod:: margrethe.margrethe.Margrethe.__init__
     :noindex:
